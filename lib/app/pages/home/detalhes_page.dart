@@ -1,11 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+
 import 'package:getx_pratica/app/controller/detalhes_controller.dart';
 import 'package:getx_pratica/app/data/repositories/github_repository.dart';
 
 class DetalhesPage extends StatefulWidget {
-  const DetalhesPage({super.key});
+  final String username;
+
+  const DetalhesPage({
+    Key? key,
+    required this.username,
+  }) : super(key: key);
 
   @override
   State<DetalhesPage> createState() => _DetalhesPageState();
@@ -16,12 +22,13 @@ class _DetalhesPageState extends State<DetalhesPage> {
 
   @override
   void initState() {
+    super.initState();
     _controller = DetalhesController(
       repository: GithubRepository(
         dio: Dio(),
       ),
     );
-    super.initState();
+    _controller.getGithubUser(username: widget.username);
   }
 
   @override
