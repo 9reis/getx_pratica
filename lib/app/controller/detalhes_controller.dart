@@ -10,8 +10,15 @@ class DetalhesController extends GetxController {
   User? _githubuser;
   User? get githurUser => _githubuser;
 
+  final RxBool _isLoading = false.obs;
+  RxBool get isLoading => _isLoading;
+
   getGithubUser({required String username}) async {
+    _isLoading.value = true;
+
     final result = await repository.getGithubUser(user: username);
     _githubuser = result;
+
+    _isLoading.value = false;
   }
 }
